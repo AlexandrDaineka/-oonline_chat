@@ -1,0 +1,4 @@
+max-connection=15
+server-port=1234
+server-host=localhost
+exit-chat=/exit
