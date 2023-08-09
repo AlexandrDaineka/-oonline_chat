@@ -9,9 +9,7 @@ import java.util.Scanner;
 
 public class ClientProcess implements Runnable {
     public static void main(String[] args) throws IOException {
-        for (int i = 0; i < 3; i++) {
-            startClient();
-        }
+        startClient();
     }
 
     @Override
@@ -19,12 +17,12 @@ public class ClientProcess implements Runnable {
         try {
             startClient();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
     private static void startClient() throws IOException {
-        SettingsTXT parserSettingTXT = new SettingsTXT(new File("settings.txt"));
+        SettingsTXT parserSettingTXT = new SettingsTXT(new File("Settings.txt"));
 
         try (Socket socket = new Socket((String) parserSettingTXT.getData("host"),
                 (int) parserSettingTXT.getData("port"));
@@ -42,7 +40,7 @@ public class ClientProcess implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("введите Ваш никнейм:");
+        System.out.println("Введите Ваш никнейм:");
         String clientName = getValueString();
         while (true) {
             System.out.println("Введите сообщение");
@@ -67,17 +65,15 @@ public class ClientProcess implements Runnable {
     }
 
     private static void threadStart(BufferedReader in) {
-        {
-            new Thread(() -> {
-                try {
-                    String mess;
-                    while ((mess = in.readLine()) != null) {
-                        System.out.println(mess);
-                    }
-                } catch (IOException e) {
-                    System.out.println("Вы вышли из чата");
+        new Thread(() -> {
+            try {
+                String mess;
+                while ((mess = in.readLine()) != null) {
+                    System.out.println(mess);
                 }
-            }).start();
-        }
+            } catch (IOException e) {
+                System.out.println("Вы вышли из чата");
+            }
+        }).start();
     }
 }
