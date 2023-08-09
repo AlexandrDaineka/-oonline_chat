@@ -6,7 +6,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 public class Server {
-    static SettingsTXT parserSettingTXT = new SettingsTXT(new File("settings.txt"));
+    static SettingsTXT parserSettingTXT = new SettingsTXT(new File("Settings.txt"));
     private final ArrayList<ClientHandler> clients = new ArrayList<>();// список клиентов, которые будут подключаться к серверу
     private final Logger log = new Logger();
 
